@@ -64,6 +64,11 @@ def metrics(zipped_list):
   assert all([isinstance(a,(int,float)) and isinstance(b,(int,float)) for a,b in zipped_list]), f'zipped_list contains a non-int or non-float'
   assert all([float(a) in [0.0,1.0] and float(b) in [0.0,1.0] for a,b in zipped_list]), f'zipped_list contains a non-binary value'
 
+  def metrics(data):
+    # data is now a dictionary containing the actual_values and predictions
+    actual_values = data['actual_values']
+    predictions = data['predictions']
+
   #first compute the sum of all 4 cases. See code above
   tn = sum([1 if pair==[0,0] else 0 for pair in zipped_list])
   tp = sum([1 if pair==[1,1] else 0 for pair in zipped_list])
