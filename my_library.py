@@ -57,4 +57,30 @@ def compute_probs(neg,pos):
   p1 = pos/(neg+pos)
   return [p0,p1]
 
+def metrics(zipped_list):
+  assert isinstance(zipped_list, list)
+  assert all([isinstance(v, list) for v in zipped_list])
+  assert all([len(v)==2 for v in zipped_list])
+  assert all([isinstance(a,(int,float)) and isinstance(b,(int,float)) for a,b in zipped_list]), f'zipped_list contains a non-int or non-float'
+  assert all([float(a) in [0.0,1.0] and float(b) in [0.0,1.0] for a,b in zipped_list]), f'zipped_list contains a non-binary value'
+
+  #first compute the sum of all 4 cases. See code above
+  tn = sum([1 if pair==[0,0] else 0 for pair in zipped_list])
+  tp = sum([1 if pair==[1,1] else 0 for pair in zipped_list])
+  fp = sum([1 if pair==[1,0] else 0 for pair in zipped_list])
+  fn = sum([1 if pair==[0,1] else 0 for pair in zipped_list])
+
+  #now can compute precicision, recall, f1, accuracy. Watch for divide by 0.
+  precision = round(tp / (tp + fp), 2) if (tp + fp) > 0 else 0
+  recall = 0 if tp + fn <= 0 else round(tp / (tp + fn), 2)
+  f1 = 0 if precision + recall <= 0 else round(2 * (precision * recall) / (precision + recall), 2)
+  accuracy = round((tp + tn) / (tp + tn + fp + fn), 2) if (tp + tn + fp + fn) != 0 else 0
+
+  #now build dictionary with the 4 measures - round values to 2 places
+  results = {'Precision': precision, 'Recall': recall, 'F1': f1, 'Accuracy': accuracy}
+
+  #finally, return the dictionary
+  return results
+  
+
 
