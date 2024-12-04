@@ -81,6 +81,87 @@ def metrics(zipped_list):
 
   #finally, return the dictionary
   return results
+
+from sklearn.ensemble import RandomForestClassifier
+
+def run_random_forest(train, test, target, n):
+  #target is target column name
+  #n is number of trees to use
+
+  assert target in train   #have not dropped it yet
+  assert target in test
+
+  #your code below - copy, paste and align from above
+  clf = RandomForestClassifier(n_estimators=n, max_depth=2, random_state=0)
+  X = up_drop_column(train, target)
+  y = up_get_column(train, target)
+  assert isinstance(y, list)
+  assert len(y) == len(X)
+  clf.fit(X, y)
+
+  k_feature_table = up_drop_column(test, target)
+  k_actuals = up_get_column(test, target)
+
+  probs = clf.predict_proba(k_feature_table)
+  assert len(probs) == len(k_actuals)
+  assert len(probs[0]) == 2
+
+  pos_probs = [p for n,p in probs]
+
+  thresholds = [.1, .15, .2, .25, .3, .35, .4, .45, .5, .55, .6, .65, .7, .75, .8, .85, .9, .95]
+  all_mets = []
+  for t in thresholds:
+    predictions = [1 if pos > t else 0 for pos in pos_probs]
+    pred_act_list = up_zip_lists(predictions, k_actuals)
+    mets = metrics(pred_act_list)  # Assuming 'metrics' function is defined
+    mets['Threshold'] = t
+    all_mets = all_mets + [mets]
+  metrics_table = up_metrics_table(all_mets)
+
+  return metrics_table
+
+
+
+
+
+  return metrics_table
+
+
+
+
+
+
+
+
+
+
+
+
+def try_archs(train, test, target_column_name, architectures, thresholds):
+  arch_acc_dict = {}  #ignore if not attempting extra credit
+
+  #now loop through architectures
+for arch in all_architectures:
+  probs = up_neural_net(scaled_train, scaled_test, arch, target)
+
+  pos_probs = [pos for neg,pos in probs]
+
+    #loop through thresholds
+  all_mets = []
+  for t in thresholds:
+    predictions = [1 if pos>=t else 0 for pos in pos_probs]
+    pred_act_list = up_zip_lists(predictions, up_get_column(scaled_test, target))
+    mets = metrics(pred_act_list)
+    mets['Threshold'] = t
+    all_mets = all_mets + [mets]
+
+    #arch_acc_dict[tuple(arch)] = max(...)  #extra credit - uncomment if want to attempt
+
+    print(f'Architecture: {arch}')
+    display(up_metrics_table(all_mets))
+
+
+
   
 
 
