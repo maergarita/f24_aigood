@@ -126,9 +126,6 @@ def run_random_forest(train, test, target, n):
 
   return metrics_table
 
-
-
-
 def try_archs(train, test, target_column_name, architectures, thresholds):
   arch_acc_dict = {}  #ignore if not attempting extra credit
 
