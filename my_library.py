@@ -157,9 +157,8 @@ for arch in all_architectures:
 
     #arch_acc_dict[tuple(arch)] = max(...)  #extra credit - uncomment if want to attempt
 
-    print(f'Architecture: {arch}')
-    display(up_metrics_table(all_mets))
-
+  print(f'Architecture: {arch}')
+  display(up_metrics_table(all_mets))
 
 
   
