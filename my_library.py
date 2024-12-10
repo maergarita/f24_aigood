@@ -145,7 +145,11 @@ all_architectures = [
                      [3,9,4],
                      #add more if you like - it's pretty easy to do
 ]
+scaled_train = up_scale_table(train)
+scaled_test = up_scale_table(test)
 
+target = 'adopted'
+arch_acc_dict = {} 
 
 def try_archs(train, test, target_column_name, architectures, thresholds):
   arch_acc_dict = {}  #ignore if not attempting extra credit
