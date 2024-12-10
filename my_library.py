@@ -147,8 +147,8 @@ def try_archs(train, test, target_column_name, architectures, thresholds):
 
     #arch_acc_dict[tuple(arch)] = max(...)  #extra credit - uncomment if want to attempt
 
-  print(f'Architecture: {arch}')
-  display(up_metrics_table(all_mets))
+    print(f'Architecture: {arch}')
+    display(up_metrics_table(all_mets))
 
 
 
