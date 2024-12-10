@@ -126,6 +126,27 @@ def run_random_forest(train, test, target, n):
 
   return metrics_table
 
+
+all_architectures = [
+                     [5,1,1],  #replace ... with a list of one or more integers
+                     [9,3,2,],
+                     [10,5,5,2],
+                     [50,3,2],
+                     [4,4,4],
+                     [5,5,5],
+                     [3,2,3],
+                     [4,2,5],
+                     [6,9,6,9],
+                     [3,4,3,2],
+                     [4,6,2],
+                     [5,2,5],
+                     [2,2,8],
+                     [4,7,5],
+                     [3,9,4],
+                     #add more if you like - it's pretty easy to do
+]
+
+
 def try_archs(train, test, target_column_name, architectures, thresholds):
   arch_acc_dict = {}  #ignore if not attempting extra credit
 
