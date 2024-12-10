@@ -132,7 +132,7 @@ def try_archs(train, test, target_column_name, architectures, thresholds):
 
   #now loop through architectures
   for arch in all_architectures:
-    probs = up_neural_net(scaled_train, scaled_test, arch, target_column_name)
+    probs = up_neural_net(train, test, arch, target_column_name)
 
     pos_probs = [pos for neg,pos in probs]
 
@@ -140,7 +140,7 @@ def try_archs(train, test, target_column_name, architectures, thresholds):
     all_mets = []
     for t in thresholds:
       predictions = [1 if pos>=t else 0 for pos in pos_probs]
-      pred_act_list = up_zip_lists(predictions, up_get_column(scaled_test, target_column_name))
+      pred_act_list = up_zip_lists(predictions, up_get_column(test, target_column_name))
       mets = metrics(pred_act_list)
       mets['Threshold'] = t
       all_mets = all_mets + [mets]
