@@ -127,55 +127,12 @@ def run_random_forest(train, test, target, n):
   return metrics_table
 
 
-all_architectures = [
-                     [5,1,1],  #replace ... with a list of one or more integers
-                     [9,3,2,],
-                     [10,5,5,2],
-                     [50,3,2],
-                     [4,4,4],
-                     [5,5,5],
-                     [3,2,3],
-                     [4,2,5],
-                     [6,9,6,9],
-                     [3,4,3,2],
-                     [4,6,2],
-                     [5,2,5],
-                     [2,2,8],
-                     [4,7,5],
-                     [3,9,4],
-                     #add more if you like - it's pretty easy to do
-]
-scaled_train = up_scale_table(train)
-scaled_test = up_scale_table(test)
 
-target = 'adopted'
-arch_acc_dict = {} 
 
 def try_archs(train, test, target_column_name, architectures, thresholds):
-  arch_acc_dict = {}  #ignore if not attempting extra credit
-
-  #now loop through architectures
-for arch in all_architectures:
-  probs = up_neural_net(scaled_train, scaled_test, arch, target)
-
-  pos_probs = [pos for neg,pos in probs]
-
-    #loop through thresholds
-  all_mets = []
-  for t in thresholds:
-    predictions = [1 if pos>=t else 0 for pos in pos_probs]
-    pred_act_list = up_zip_lists(predictions, up_get_column(scaled_test, target))
-    mets = metrics(pred_act_list)
-    mets['Threshold'] = t
-    all_mets = all_mets + [mets]
-
-    #arch_acc_dict[tuple(arch)] = max(...)  #extra credit - uncomment if want to attempt
-
-  print(f'Architecture: {arch}')
-  display(up_metrics_table(all_mets))
 
 
-
+  
 
 
 
